@@ -21,3 +21,12 @@ button.run { background: #f2c230; border-color: #d9a90f; font-weight: 600; }
 .note { font-size: .8rem; color: #8a92a3; margin: 10px 0 0; }
 footer { text-align: center; font-size: .85rem; color: #5b6475; padding: 10px 16px 30px; }
 code { background: rgba(127,127,127,.15); padding: 1px 4px; border-radius: 3px; }
+
+/* search boxes */
+.search { position: relative; margin-bottom: 14px; }
+.search input { width: 100%; padding: 9px 11px; font-size: 1rem; }
+.results { position: absolute; z-index: 10; left: 0; right: 0; margin: 2px 0 0; padding: 0; list-style: none;
+  background: #fff; border: 1px solid #c9ced8; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.results:empty { display: none; }
+.results li { padding: 7px 11px; cursor: pointer; font-size: .92rem; }
+.results li:hover { background: #eef0f4; }

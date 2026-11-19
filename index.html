@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baseball ML: Team Wins & Hall of Fame</title>
   <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
-  <script src="index.js"></script>
+  <script src="index.js" defer></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +18,11 @@
 <main>
 <section class="card">
   <h2>1 · Regression: MLB Team Wins</h2>
-  <p class="sub">Model: PyTorch network (linear + nonlinear parts) trained with MSE loss on full 162-game seasons, 1962–2021 (Lahman Database).</p>
+  <p class="sub">Model: PyTorch network (linear + nonlinear parts) trained with MSE loss on full 162-game seasons, 1962–2021 (Lahman Database). Pick a team to compare its predicted wins with its real record, or type in your own stats. Older or shortened seasons are scaled to 162 games and back; pre-1962 teams are outside the training data, so treat those as rougher estimates.</p>
+  <div class="search">
+    <input id="teamSearch" type="text" placeholder="Search any team, 1901–2021 (e.g. 1927 Yankees, 2016 Cubs)" autocomplete="off">
+    <ul id="teamResults" class="results"></ul>
+  </div>
   <div class="grid">
     <label>Runs scored<input type="number" id="c0" value="808"></label>
     <label>Runs allowed<input type="number" id="c1" value="556"></label>
@@ -30,9 +34,6 @@
     <label>Errors<input type="number" id="c7" value="101"></label>
   </div>
   <div class="buttons">
-    <button onclick="presetTeam('cubs')">2016 Cubs (103 W)</button>
-    <button onclick="presetTeam('mariners')">2001 Mariners (116 W)</button>
-    <button onclick="presetTeam('tigers')">2003 Tigers (43 W)</button>
     <button class="run" onclick="runWins()">Run</button>
   </div>
   <div id="predWins" class="result"></div>
@@ -40,7 +41,11 @@
 
 <section class="card">
   <h2>2 · Classification: Baseball Hall of Fame</h2>
-  <p class="sub">Model: PyTorch neural network trained with cross-entropy loss on career batting stats (Lahman Database). Output is softmax probability.</p>
+  <p class="sub">Model: PyTorch neural network trained with cross-entropy loss on career batting stats (Lahman Database). Output is softmax probability. Trained on players with 10+ seasons who retired by 2003; for anyone more recent it's just the model's guess.</p>
+  <div class="search">
+    <input id="playerSearch" type="text" placeholder="Search any position player (e.g. Babe Ruth, Tony Gwynn, Derek Jeter)" autocomplete="off">
+    <ul id="playerResults" class="results"></ul>
+  </div>
   <div class="grid">
     <label>Games<input type="number" id="d0" value="2440"></label>
     <label>Runs<input type="number" id="d1" value="1383"></label>
@@ -52,9 +57,6 @@
     <label>Batting average<input type="number" id="d7" value="0.338" step="0.001"></label>
   </div>
   <div class="buttons">
-    <button onclick="presetHOF('gwynn')">Tony Gwynn</button>
-    <button onclick="presetHOF('griffey')">Ken Griffey Jr.</button>
-    <button onclick="presetHOF('garvey')">Steve Garvey</button>
     <button class="run" onclick="runHOF()">Run</button>
   </div>
   <div id="predHOF" class="result"></div>
