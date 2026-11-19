@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baseball ML: Team Wins & Hall of Fame</title>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+  <script src="index.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Baseball ML: Team Wins & Hall of Fame</h1>
+  <p>PyTorch models exported to ONNX and run fully in your browser with <code>onnxruntime-web</code>.
+     The models apply their own feature standardization, so type in raw values.</p>
+</header>
+
+<main>
+<section class="card">
+  <h2>1 · Regression: MLB Team Wins</h2>
+  <p class="sub">Model: PyTorch network (linear + nonlinear parts) trained with MSE loss on full 162-game seasons, 1962–2021 (Lahman Database).</p>
+  <div class="grid">
+    <label>Runs scored<input type="number" id="c0" value="808"></label>
+    <label>Runs allowed<input type="number" id="c1" value="556"></label>
+    <label>Hits<input type="number" id="c2" value="1409"></label>
+    <label>Home runs<input type="number" id="c3" value="199"></label>
+    <label>Walks<input type="number" id="c4" value="656"></label>
+    <label>Stolen bases<input type="number" id="c5" value="66"></label>
+    <label>Pitcher strikeouts<input type="number" id="c6" value="1441"></label>
+    <label>Errors<input type="number" id="c7" value="101"></label>
+  </div>
+  <div class="buttons">
+    <button onclick="presetTeam('cubs')">2016 Cubs (103 W)</button>
+    <button onclick="presetTeam('mariners')">2001 Mariners (116 W)</button>
+    <button onclick="presetTeam('tigers')">2003 Tigers (43 W)</button>
+    <button class="run" onclick="runWins()">Run</button>
+  </div>
+  <div id="predWins" class="result"></div>
+</section>
+
+<section class="card">
+  <h2>2 · Classification: Baseball Hall of Fame</h2>
+  <p class="sub">Model: PyTorch neural network trained with cross-entropy loss on career batting stats (Lahman Database). Output is softmax probability.</p>
+  <div class="grid">
+    <label>Games<input type="number" id="d0" value="2440"></label>
+    <label>Runs<input type="number" id="d1" value="1383"></label>
+    <label>Hits<input type="number" id="d2" value="3141"></label>
+    <label>Home runs<input type="number" id="d3" value="135"></label>
+    <label>RBI<input type="number" id="d4" value="1138"></label>
+    <label>Stolen bases<input type="number" id="d5" value="319"></label>
+    <label>Walks<input type="number" id="d6" value="790"></label>
+    <label>Batting average<input type="number" id="d7" value="0.338" step="0.001"></label>
+  </div>
+  <div class="buttons">
+    <button onclick="presetHOF('gwynn')">Tony Gwynn</button>
+    <button onclick="presetHOF('griffey')">Ken Griffey Jr.</button>
+    <button onclick="presetHOF('garvey')">Steve Garvey</button>
+    <button class="run" onclick="runHOF()">Run</button>
+  </div>
+  <div id="predHOF" class="result"></div>
+</section>
+</main>
+
+<footer>
+  Models: <a href="wins_regression.onnx">wins_regression.onnx</a> ·
+  <a href="hof_classifier.onnx">hof_classifier.onnx</a> ·
+  Input name <code>input1</code> [batch, 8] → output <code>output1</code>
+</footer>
+</body>
+</html>
